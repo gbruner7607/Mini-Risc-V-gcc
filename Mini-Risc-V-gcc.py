@@ -10,7 +10,7 @@ import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument('files', nargs='+', help='File Names (Takes .c and .s')
-parser.add_argument('-c', '--coe', action='store_true', help='generate .coe file instead of hexfile')
+parser.add_argument('-c', '--coe', action='store_true', help='generate .coe file instead of .hex file')
 args = parser.parse_args()
 
 
