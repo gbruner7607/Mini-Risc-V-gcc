@@ -99,6 +99,8 @@ def construct(filename):
 					outline = 'bge ' + translateABI(ins[2]) + ',x0,' + ins[3]
 				elif ins[1] == 'nop':
 					outline = 'add x0,x0,x0'
+				elif ins[1] == 'lui':
+					outline = 'lui ' + translateABI(ins[2]) + ',' + ins[3]
 				else:
 					outline = outline + ins[1] + ' ' + translateABI(ins[2]) + ','
 					# print(ins[3])

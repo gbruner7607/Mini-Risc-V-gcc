@@ -15,9 +15,9 @@ ser = serial.Serial(args.port, baudrate)
 ser.bytesize = serial.EIGHTBITS
 ser.timeout = 2;
 
-input("Make sure that the PROG switch is set before programming!")
+raw_input("Make sure that the PROG switch is set before programming!")
 
-
+print(args.hexfile)
 f = open(args.hexfile, 'r')
 ins = f.readlines() 
 deadbeef = 'deadbeef'
