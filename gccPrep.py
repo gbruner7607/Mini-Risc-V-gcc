@@ -97,6 +97,8 @@ def construct(filename):
 					outline = 'bne ' + translateABI(ins[2]) + ',x0,' + ins[3]
 				elif ins[1] == 'bgez':
 					outline = 'bge ' + translateABI(ins[2]) + ',x0,' + ins[3]
+				elif ins[1] == 'bgtz':
+					outline = 'blt x0,' + translateABI(ins[2]) + ',' + ins[3]
 				elif ins[1] == 'nop':
 					outline = 'add x0,x0,x0'
 				elif ins[1] == 'lui':
@@ -122,9 +124,10 @@ def writeToFile(filename, outdata):
 	fsplit = re.split('\.', filename)
 	outfile = fsplit[0] + '.asm'
 	with open(outfile, 'w') as f:
+		f.write('xor x0,x0,x0\n')
 		f.write('xor x2,x2,x2\n')
 		f.write('xor x8,x8,x8\n')
-		f.write('addi x2,x2,2048\n')
+		f.write('addi x2,x2,128\n')
 		f.write('jal x1,main\n')
 		f.write('jal x1,exit\n')
 		for line in outdata:
