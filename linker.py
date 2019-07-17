@@ -49,7 +49,7 @@ class Linker:
 		symtab = self.E['.symtab']
 		idx = 0
 		for entry in symtab:
-			if (entry.type == 'OBJECT'):
+			if (entry.type == 'OBJECT' ):#or (entry.type == 'NOTYPE' and entry.name != '')):
 				ObjectEntries.append(idx)
 				# print(entry.name)
 				memsize += entry.size 
@@ -66,7 +66,7 @@ class Linker:
 			entry = self.E['.symtab'][idx]
 			shname = self.E['SH'][entry.shndx].name
 			symname = entry.name 
-			print(shname)
+			# print(shname)
 			self.MemObjects[symname] = Object(self.E[shname], entry.size, presmem)
 			# self.E['.symtab']
 			presmem += entry.size
