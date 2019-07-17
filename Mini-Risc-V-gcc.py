@@ -3,6 +3,7 @@
 import gccAssembler as asm 
 import coe_assembler as coe
 import gccPrep as prep 
+import linker
 # import sys 
 import argparse
 import re
@@ -11,6 +12,8 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument('files', nargs='+', help='File Names (Takes .c and .s')
 parser.add_argument('-c', '--coe', action='store_true', help='generate .coe file instead of .hex file')
+parser.add_argument('-s', '--save_temps', action='store_true', help='save intermediate .s and .o files')
+parser.add_argument('-o', '--output', type=str, default='a.hex')
 args = parser.parse_args()
 
 
@@ -21,37 +24,60 @@ args = parser.parse_args()
 # primaryfile = sys.argv[1]
 primaryfile = args.files[0]
 primaryfilebase = re.split('\.', primaryfile) 
-cmd = 'riscv32-unknown-elf-gcc -Ilib/ -S ' 
-filenames = list()
+# cmd = 'riscv32-unknown-elf-gcc -Ilib/ -S ' 
+cmd1 = 'riscv32-unknown-elf-gcc -S '
+cmd2 = 'riscv32-unknown-elf-as -o '
+sfiles = list()
+# ofiles = list()
+objname = args.output.split('.')[0] + '.o'
 # print(len(sys.argv))
 for i in range(0, len(args.files)):
 	# print(sys.argv[i])
 	fsplit = re.split('\.', args.files[i])
-	newfile = fsplit[0] + '.s'
-	filenames.append(newfile)
+	sf = fsplit[0] + '.s'
+	# of = fsplit[0] + '.o'
+	sfiles.append(sf)
+	# ofiles.append(of)
 	if (fsplit[1] == 'c'):
 		# print('adding ' + sys.argv[i])
-		cmd = cmd + args.files[i] + ' '
+		cmd1 = cmd1 + args.files[i] + ' '
 # cmd = cmd + filenames
 
-with open(primaryfile) as f:
-	for line in f:
-		line = line.strip('\n')
-		if ('#include<' in line):
-			# print("APPENDING")
-			libfile = line.replace('#include<', '').replace('>','')
-			fsplit = re.split('\.', libfile)
-			sfile =fsplit[0] + '.s'
-			if not (sfile in filenames):
-				sfile = '/home/gray/Projects/Assembly/lib/' + sfile
-				filenames.append(sfile)
+os.system(cmd1)
+
+cmd2 = cmd2 + objname + ' '
+
+for i in range(len(sfiles)):
+	cmd2 = cmd2 + ' ' + sfiles[i]
+
+os.system(cmd2) 
+
+linker.ld(objname)
+
+if not args.save_temps:
+	os.system('rm ' + objname)
+	for f in sfiles:
+		os.system('rm ' + f)
+
+
+# with open(primaryfile) as f:
+# 	for line in f:
+# 		line = line.strip('\n')
+# 		if ('#include<' in line):
+# 			# print("APPENDING")
+# 			libfile = line.replace('#include<', '').replace('>','')
+# 			fsplit = re.split('\.', libfile)
+# 			sfile =fsplit[0] + '.s'
+# 			if not (sfile in filenames):
+# 				sfile = '/home/gray/Projects/Assembly/lib/' + sfile
+# 				filenames.append(sfile)
 
 # print(filenames)
 
 
-os.system(cmd)
-asmfile = prep.Prepare(filenames)
-if (args.coe):
-	coe.assemble(asmfile)
-else:
-	asm.assemble(asmfile)
+# os.system(cmd)
+# asmfile = prep.Prepare(filenames)
+# if (args.coe):
+# 	coe.assemble(asmfile)
+# else:
+# 	asm.assemble(asmfile)
