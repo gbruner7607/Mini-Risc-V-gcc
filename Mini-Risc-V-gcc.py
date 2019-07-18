@@ -52,7 +52,7 @@ for i in range(len(sfiles)):
 
 os.system(cmd2) 
 
-linker.ld(objname)
+linker.ld(objname, args.coe)
 
 if not args.save_temps:
 	os.system('rm ' + objname)

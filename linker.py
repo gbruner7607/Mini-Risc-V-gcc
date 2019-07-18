@@ -179,16 +179,20 @@ class Linker:
 		# print(len(self.ins))
 
 	#Saves the hex instructions to a file
-	def SaveHex(self, filename):
+	def SaveHex(self, filename, coe = False):
 		try:
 			self.ins 
 		except AttributeError:
 			self.GenerateHex()
 		f = open(filename, 'w')
+		if (coe):
+			f.write('memory_initialization_radix=16;\n'+'memory_initialization_vector=\n')
 		for h in self.ins:
 			hexstring = hex(h)[2:].zfill(8)
 			# print(hexstring)
 			f.write(hexstring + '\n')
+		if (coe):
+			f.write(';')
 		f.close()
 
 	def AdjustFuncOffsets(self, membase = 0x10):
@@ -294,7 +298,7 @@ class Linker:
 		self.E.sections['.symtab'] = symtab
 
 
-def ld(filename):
+def ld(filename, coe = False):
 	L = Linker(filename)
 
 	L.CreateObjects()
@@ -308,7 +312,7 @@ def ld(filename):
 	outfile = splt[0] + '.hex'
 # print(outfile)
 
-	L.SaveHex(outfile)
+	L.SaveHex(outfile, coe)
 
 
 # E = re.ELF(sys.argv[1]) 
