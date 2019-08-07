@@ -10,6 +10,7 @@ class Object:
 		i = 0
 		for d in data:
 			self.data[pres_addr] = d 
+			print(hex(d))
 			pres_addr += 4
 			i += 1
 			if i >= self.size:
