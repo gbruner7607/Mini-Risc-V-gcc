@@ -28,12 +28,15 @@ export PATH="path/to/toolchain/bin:$PATH"
 
 ## Usage
 ```
-usage: Mini-Risc-V-gcc.py [-h] [-c] files [files ...]
+usage: Mini-Risc-V-gcc.py [-h] [-c] [-s] [-o OUTPUT] files [files ...]
 
 positional arguments:
-  files       File Names (Takes .c and .s
+  files                 File Names (Takes .c and .s
 
 optional arguments:
-  -h, --help  show this help message and exit
-  -c, --coe   generate .coe file instead of .hex file
+  -h, --help            show this help message and exit
+  -c, --coe             generate .coe file instead of .hex file
+  -s, --save_temps      save intermediate .s and .o files
+  -o OUTPUT, --output OUTPUT (defaults to a.o and a.hex)
+
 ```
