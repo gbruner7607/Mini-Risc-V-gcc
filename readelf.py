@@ -345,6 +345,9 @@ class ELF:
 				return i 
 		return -1 
 
+	def keys(self):
+		return self.sections.keys()
+
 	def __getitem__(self, arg):
 		return self.sections[arg]
 

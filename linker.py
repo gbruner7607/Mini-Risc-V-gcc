@@ -207,6 +207,8 @@ class Linker:
 
 	#Updates values and addresses based on the relocation table 
 	def RELA(self):
+		if not '.rela.text' in self.E.keys():
+			return
 		text = self.E['.text'] 
 		# print(text)
 		relatext = self.E['.rela.text']
