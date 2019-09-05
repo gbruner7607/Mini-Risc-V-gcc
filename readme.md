@@ -36,7 +36,7 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -c, --coe             generate .coe file instead of .hex file
-  -s, --save_temps      save intermediate .s and .o files
-  -o OUTPUT, --output OUTPUT (defaults to a.o and a.hex)
+  -s, --save_temps      save intermediate .s and .o files in same path as output
+  -o OUTPUT, --output OUTPUT (defaults .o and .hex/.coe of first file input)
 
 ```
