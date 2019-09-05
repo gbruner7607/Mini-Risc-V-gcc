@@ -259,7 +259,7 @@ class Linker:
 				text.data[offset] = int(ins_bin, 2)
 
 			if (entry.type == 'R_RISCV_BRANCH'):
-				print('RISCV_BRANCH')
+				# print('RISCV_BRANCH')
 				offset = int(entry.offset / 4) 
 				jumpto = int(symtab_entry.value / 4)
 				jumpfrom = offset 
@@ -301,7 +301,7 @@ class Linker:
 		self.E.sections['.symtab'] = symtab
 
 
-def ld(filename, coe = False):
+def ld(filename, coe = False, outfile = 'a.hex', outpath = ''):
 	L = Linker(filename)
 
 	L.CreateObjects()
@@ -311,11 +311,14 @@ def ld(filename, coe = False):
 	L.GenerateHex()
 
 
-	splt = filename.split('.')
-	outfile = splt[0] + '.hex'
-# print(outfile)
+# 	splt = filename.split('.')
+# 	if (coe):
+# 		outfile = splt[0] + '.coe'
+# 	else:
+# 		outfile = splt[0] + '.hex'
+# # print(outfile)
 
-	L.SaveHex(outfile, coe)
+	L.SaveHex(outpath + outfile, coe)
 
 
 # E = re.ELF(sys.argv[1]) 
