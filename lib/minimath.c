@@ -18,7 +18,7 @@ int __divsi3(int a, int b) {
 	int c = 0; 
 	while(a > 0) {
 		a = a - b; 
-		if (a > 0) c++; 
+		if (a >= 0) c++; 
 	}
 	return c; 
 }
