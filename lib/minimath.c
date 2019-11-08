@@ -22,3 +22,36 @@ int __divsi3(int a, int b) {
 	}
 	return c; 
 }
+
+int expo(int a, int b) {
+	int result = 1;
+
+	while(b) {
+		if (b&1) {
+			result *= a;
+		}
+		b >>=1;
+		a *= a; 
+	}
+
+	return result;
+}
+
+int modexpo(int a, uint n, int p) {
+	int res = 1; 
+	a = a % p; 
+
+	while (n > 0) {
+		if (n & 1) res = (res * a) % p; 
+
+		n = n >> 1; 
+		a = (a*a) % p; 
+	}
+	return res; 
+}
+
+int gcd(int a, int b) {
+	if (a < b) return gcd(b, a); 
+	else if (a%b == 0) return b;
+	else return gcd(b, a%b); 
+}
